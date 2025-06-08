@@ -4,6 +4,8 @@ import { Box, Button } from "@mui/material";
 export default async function Home() {
   const users = await getUsers();
 
+  console.log('users', users)
+
   return (
     <div>
       <Box
