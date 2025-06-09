@@ -1,10 +1,11 @@
-import { getUsers } from "@/api/users/usersApi";
+// import { getUsers } from "@/api/users/usersApi";
+import { db } from "@/db";
 import { Box, Button } from "@mui/material";
 
 export default async function Home() {
-  const users = await getUsers();
+  const users = await db.query.UsersTable.findMany()
 
-  console.log('users', users)
+  console.log("users", users);
 
   return (
     <div>
