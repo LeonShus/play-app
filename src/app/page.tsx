@@ -1,9 +1,9 @@
-// import { getUsers } from "@/api/users/usersApi";
-import { db } from "@/db";
-import { Box, Button } from "@mui/material";
+import { getUsers } from "@/api/users/usersApi";
+import { TestButton } from "@/components/TestButton";
+import { Box } from "@mui/material";
 
 export default async function Home() {
-  const users = await db.query.UsersTable.findMany()
+  const users = await getUsers();
 
   console.log("users", users);
 
@@ -21,7 +21,8 @@ export default async function Home() {
         {users?.map((e, index) => {
           return <div key={index}>{e.name}</div>;
         })}
-        <Button variant="contained">Get Users</Button>
+
+        <TestButton />
       </Box>
     </div>
   );
