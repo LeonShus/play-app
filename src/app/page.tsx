@@ -1,11 +1,20 @@
-import { getUsers } from "@/api/users/usersApi";
+import { getUser, getUsers } from "@/lib/api/users/usersApi";
 import { TestButton } from "@/components/TestButton";
 import { Box } from "@mui/material";
+import { User } from "@/components/User";
+import { auth } from "@/api/auth/[...nextauth]/route";
 
 export default async function Home() {
   const users = await getUsers();
 
-  console.log("users", users);
+  const res = await auth();
+
+  const re2s = await getUser({ email: "test@test.ru" });
+
+  console.log("res", res);
+
+  
+  console.log("rere2ss", re2s);
 
   return (
     <div>
@@ -18,8 +27,8 @@ export default async function Home() {
           justifyContent: "center",
         }}
       >
-        {users?.map((e, index) => {
-          return <div key={index}>{e.name}</div>;
+        {users?.map((e) => {
+          return <User key={e.id} id={e.id} name={e.name} />;
         })}
 
         <TestButton />
