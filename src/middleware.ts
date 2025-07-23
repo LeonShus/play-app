@@ -1,28 +1,32 @@
 // middleware.ts
 
-import { auth } from "@/api/auth/[...nextauth]/route";
 import { NextResponse } from "next/server";
+import { auth } from "./auth";
 
 export default auth((req) => {
-  console.log('middleware auth @@@@@@@@@@@', req.auth)
+  console.log("middleware auth", req.auth);
   const { nextUrl } = req;
-  const isLoggedIn = !!req.auth;
+  const isLoggedIn = Boolean(req.auth?.user?.email);
 
+  console.log("isLoggedIn", isLoggedIn);
 
-  // Пути, доступные без аутентификации
-  const publicPaths = ["/login"];
+  // Закрытые пути
+  // const closedPaths: string[] = [];
 
-  // Проверяем, является ли путь публичным
-  const isPublicPath = publicPaths.includes(nextUrl.pathname);
+  const publicPath: string[] = ["/auth/login"];
 
-  if (isPublicPath && isLoggedIn) {
-    // Если пользователь авторизован и пытается получить доступ к публичному пути
-    return NextResponse.redirect(new URL("/", nextUrl));
+  const isPublic = publicPath.includes(nextUrl.pathname);
+
+  console.log("nextUrl", nextUrl);
+
+  if (!isLoggedIn && !isPublic) {
+    // Если пользователь не авторизован, делаем редирект на страницу аутентификации
+    return NextResponse.redirect(new URL("/auth/login", nextUrl));
   }
 
-  if (!isPublicPath && !isLoggedIn) {
-    // Если пользователь не авторизован и пытается получить доступ к защищенному пути
-    return NextResponse.redirect(new URL("/login", nextUrl));
+  if (isLoggedIn && isPublic) {
+    // Если пользователь авторизован, и пытается попасть на страницу аутентификации, мы редиректим его на главную
+    return NextResponse.redirect(new URL("/", nextUrl));
   }
 
   return NextResponse.next();

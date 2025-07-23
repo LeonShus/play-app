@@ -1,57 +1,81 @@
-import Credentials from "next-auth/providers/credentials";
-import { z } from "zod";
-// import { authConfig } from "../auth.config";
-import { getUser } from "./lib/api/users/usersApi";
-import bcrypt from "bcryptjs";
+import { db } from "@/db";
+import { UsersTable } from "@/db/schema";
+import { eq } from "drizzle-orm";
 import NextAuth from "next-auth";
+import CredentialsProvider from "next-auth/providers/credentials";
+import { z } from "zod";
+import bcrypt from "bcryptjs";
 
-export const { auth, handlers, signIn, signOut } = NextAuth({
-  // ...authConfig,
-  pages: {
-    signIn: "/login",
-  },
-  callbacks: {
-    authorized({ auth, request: { nextUrl } }) {
-      console.log("111111111111111111111111");
-
-      return false;
-    },
-  },
+export const { handlers, auth, signIn, signOut } = NextAuth({
+  // adapter: DrizzleAdapter(db),
   providers: [
-    Credentials({
-      async authorize(credentials, req) {
-        console.log("!@#!@#!@#!@#!@#!@#!@#!@#!@#!@#!@#!@#!@#!@#!@#");
+    CredentialsProvider({
+      name: "Credentials",
+      credentials: {
+        email: { label: "Email", type: "text" },
+        password: { label: "Password", type: "password" },
+      },
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      //@ts-ignore
+      async authorize(credentials) {
+        try {
+          // Валидируем поля
+          const parsedCredentials = z
+            .object({ email: z.string().email(), password: z.string().min(6) })
+            .safeParse(credentials);
 
-        const user = { id: "1", name: "J Smith", email: "jsmith@example.com" };
-        if (user) {
-          return user;
-        } else {
-          return null;
+          if (!parsedCredentials.success) {
+            return null;
+          }
+
+          // Находим юзера в Бд
+          const { email, password } = parsedCredentials.data;
+
+          const user = await db.query.UsersTable.findFirst({
+            where: eq(UsersTable.email, email),
+          });
+
+          if (!user || !user.id) {
+            return null;
+          }
+
+          // Проверяем совпадения пароля
+          const { password: userPass, ...keys } = user;
+
+          const isValidPass = await bcrypt.compare(password, userPass);
+
+          if (!isValidPass) {
+            return null;
+          }
+
+          return {
+            ...keys,
+          };
+        } catch (error) {
+          return error;
         }
-
-        // const parsedCredentials = z
-        //   .object({ email: z.string().email(), password: z.string().min(6) })
-        //   .safeParse(credentials);
-
-        // if (parsedCredentials.success) {
-        //   const { email, password } = parsedCredentials.data;
-
-        //   const user = await getUser({ email });
-
-        //   if (!user) {
-        //     return null;
-        //   }
-
-        //   const passwordMatch = await bcrypt.compare(password, user.password);
-
-        //   if (passwordMatch) {
-        //     const { password, ...userData } = user;
-        //     return userData;
-        //   }
-        // }
-
-        // return null;
       },
     }),
   ],
+  //   callbacks: {
+  //     async jwt({ token, user }) {
+  //       console.log("jwt @@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+  //       if (user) {
+  //         token.id = user.id;
+  //       }
+  //       return token;
+  //     },
+  //     async session({ session, token }) {
+  //       console.log("session @@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+  //       if (session.user) {
+  //         session.user.id = token.id as string;
+  //       }
+  //       return session;
+  //     },
+  //   },
+  //   pages: {
+  //     signIn: "/login",
+  //     error: "/auth/error",
+  //   },
+  //   secret: process.env.NEXTAUTH_SECRET,
 });

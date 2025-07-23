@@ -47,9 +47,6 @@ export const LoginForm = () => {
           />
         </FormControl>
         <Button
-          onClick={() => {
-            console.log();
-          }}
           type="submit"
           variant="contained"
         >

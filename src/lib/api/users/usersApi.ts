@@ -6,12 +6,12 @@ import { eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import bcrypt from "bcryptjs";
 
-export async function getUser({email}: {email: string}) {
+export async function getUser({ email }: { email: string }) {
   const user = await db.query.UsersTable.findFirst({
-    where: eq(UsersTable.email, email)
+    where: eq(UsersTable.email, email),
   });
 
-    if (!user?.id) {
+  if (!user?.id) {
     throw new Error("User not exist");
   }
 
@@ -33,6 +33,7 @@ export async function createUser(data: typeof UsersTable.$inferInsert) {
     throw new Error("User already exist");
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { password, ...fields } = data;
 
   const hash = bcrypt.hashSync(data.password, 10);
@@ -59,5 +60,4 @@ export async function removeUser({ userId }: { userId: number }) {
     throw new Error("Failed to delete user");
   }
   revalidatePath("/");
-  console.log("1@#!@#!@#", data);
 }
