@@ -1,6 +1,7 @@
 // import type { Metadata } from "next";
 // import { Geist, Geist_Mono } from "next/font/google";
 
+import { Providers } from "@/components/Providers";
 import "./globals.css";
 import "@fontsource/roboto/300.css";
 import "@fontsource/roboto/400.css";
@@ -27,11 +28,11 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-
-
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <Providers>{children}</Providers>
+      </body>
     </html>
   );
 }

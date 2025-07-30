@@ -15,9 +15,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         email: { label: "Email", type: "text" },
         password: { label: "Password", type: "password" },
       },
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      //@ts-ignore
-      async authorize(credentials) {
+      async authorize(credentials, req) {
         try {
           // Валидируем поля
           const parsedCredentials = z
@@ -49,10 +47,12 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
           }
 
           return {
-            ...keys,
+            id: String(keys.id),
+            email: keys.email,
+            name: keys.name,
           };
         } catch (error) {
-          return error;
+          return null;
         }
       },
     }),

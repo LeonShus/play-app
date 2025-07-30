@@ -4,20 +4,15 @@ import { NextResponse } from "next/server";
 import { auth } from "./auth";
 
 export default auth((req) => {
-  console.log("middleware auth", req.auth);
   const { nextUrl } = req;
   const isLoggedIn = Boolean(req.auth?.user?.email);
-
-  console.log("isLoggedIn", isLoggedIn);
 
   // Закрытые пути
   // const closedPaths: string[] = [];
 
-  const publicPath: string[] = ["/auth/login"];
+  const publicPath: string[] = ["/auth/login", "/auth/register"];
 
   const isPublic = publicPath.includes(nextUrl.pathname);
-
-  console.log("nextUrl", nextUrl);
 
   if (!isLoggedIn && !isPublic) {
     // Если пользователь не авторизован, делаем редирект на страницу аутентификации

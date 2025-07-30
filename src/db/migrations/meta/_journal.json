@@ -15,6 +15,20 @@
       "when": 1750688866286,
       "tag": "0001_optimal_eternity",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1753447453165,
+      "tag": "0002_sour_domino",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1753872359530,
+      "tag": "0003_open_ultimates",
+      "breakpoints": true
     }
   ]
 }

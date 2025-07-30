@@ -30,7 +30,7 @@ export async function createUser(data: typeof UsersTable.$inferInsert) {
   });
 
   if (user?.id) {
-    throw new Error("User already exist");
+    throw new Error("Пользователь уже существует");
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -43,7 +43,7 @@ export async function createUser(data: typeof UsersTable.$inferInsert) {
     .values({ ...fields, password: hash })
     .returning();
 
-  if (!newUser) throw new Error("Failed to create user");
+  if (!newUser) throw new Error("Ошибка при создании пользователя");
 
   revalidatePath("/");
 

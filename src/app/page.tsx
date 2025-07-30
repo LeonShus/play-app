@@ -1,5 +1,4 @@
 import { getUsers } from "@/lib/api/users/usersApi";
-import { TestButton } from "@/components/TestButton";
 import { Box } from "@mui/material";
 import { User } from "@/components/User";
 
@@ -18,10 +17,8 @@ export default async function Home() {
         }}
       >
         {users?.map((e) => {
-          return <User key={e.id} id={e.id} name={e.name} />;
+          return <User key={e.id} id={e.id} name={e.name || e.email} />;
         })}
-
-        <TestButton />
       </Box>
     </div>
   );
