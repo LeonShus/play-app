@@ -8,6 +8,7 @@ import bcrypt from "bcryptjs";
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   // adapter: DrizzleAdapter(db),
+  trustHost: true,
   providers: [
     CredentialsProvider({
       name: "Credentials",
