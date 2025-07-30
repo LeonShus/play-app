@@ -1,13 +1,14 @@
 export type TTheme = "light" | "dark";
 
 export interface IAuthFormState {
-  email: string | null;
-  errors:
+  success?: boolean;
+  email?: string | null;
+  errors?:
     | {
         email?: string[] | undefined;
         password?: string[] | undefined;
         confirmPassword?: string[] | undefined;
       }
     | undefined;
-  errorMessage: string | null;
+  errorMessage?: string | null;
 }

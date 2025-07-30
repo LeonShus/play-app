@@ -3,6 +3,7 @@
 import { registerFormSchema } from "@/lib/formSchemas/register";
 import { IAuthFormState } from "@/lib/types/types";
 import { createUser } from "../users/usersApi";
+import { signIn } from "@/auth";
 
 export async function register(
   prevState: IAuthFormState,
@@ -19,7 +20,17 @@ export async function register(
       const { email, password } = validate.data;
 
       try {
-        await createUser({ email, password });
+        const user = await createUser({ email, password });
+
+        if (user?.id) {
+          await signIn("credentials", {
+            email: user.email,
+            password: password,
+            redirect: false,
+          });
+
+          return { success: true };
+        }
       } catch (error: unknown) {
         if (error instanceof Error) {
           return {

@@ -12,9 +12,12 @@ import {
   TextField,
 } from "@mui/material";
 import Link from "next/link";
-import { useActionState } from "react";
+import { useRouter } from "next/navigation";
+import { useActionState, useEffect } from "react";
 
 export const RegisterForm = () => {
+  const router = useRouter();
+
   const [state, formAction, isPending] = useActionState<IAuthFormState>(
     register as (
       state: IAuthFormState,
@@ -26,6 +29,12 @@ export const RegisterForm = () => {
       email: "",
     }
   );
+
+  useEffect(() => {
+    if (state.success) {
+      router.push("/");
+    }
+  }, [state]);
 
   return (
     <Paper
