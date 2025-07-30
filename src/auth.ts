@@ -15,7 +15,10 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         email: { label: "Email", type: "text" },
         password: { label: "Password", type: "password" },
       },
-      async authorize(credentials, req) {
+      async authorize(
+        credentials
+        //  req
+      ) {
         try {
           // Валидируем поля
           const parsedCredentials = z
@@ -51,7 +54,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
             email: keys.email,
             name: keys.name,
           };
-        } catch (error) {
+        } catch {
           return null;
         }
       },

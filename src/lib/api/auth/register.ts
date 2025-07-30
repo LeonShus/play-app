@@ -2,7 +2,6 @@
 
 import { registerFormSchema } from "@/lib/formSchemas/register";
 import { IAuthFormState } from "@/lib/types/types";
-import { AuthError } from "next-auth";
 import { createUser } from "../users/usersApi";
 
 export async function register(
@@ -21,12 +20,14 @@ export async function register(
 
       try {
         await createUser({ email, password });
-      } catch (error: any) {
-        return {
-          errors: undefined,
-          errorMessage: error.message,
-          email: formData.get("email") as string,
-        };
+      } catch (error: unknown) {
+        if (error instanceof Error) {
+          return {
+            errors: undefined,
+            errorMessage: error.message,
+            email: formData.get("email") as string,
+          };
+        }
       }
     }
 
@@ -35,7 +36,7 @@ export async function register(
       errorMessage: "",
       email: formData.get("email") as string,
     };
-  } catch (error) {
+  } catch {
     return {
       errors: undefined,
       errorMessage: "Что-то пошло не так",
