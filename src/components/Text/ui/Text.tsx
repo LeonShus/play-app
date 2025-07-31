@@ -1,3 +1,5 @@
+"use client";
+
 import { ReactNode } from "react";
 import { StyledText } from "./styled";
 import { SxProps, Theme } from "@mui/material";

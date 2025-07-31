@@ -3,6 +3,7 @@
 import { Text } from "@/components/Text";
 import { TTheme } from "@/lib/types/types";
 import { Box, Switch } from "@mui/material";
+import Link from "next/link";
 import { Dispatch, SetStateAction } from "react";
 
 export const Header = ({
@@ -25,6 +26,13 @@ export const Header = ({
         }}
       />
       <Text text={themeMode} />
+
+      <Link href={"/speed-test"}>
+        <Text
+          text="Speed-test"
+          sx={{ color: "primary.light", marginLeft: "30px" }}
+        />
+      </Link>
     </Box>
   );
 };
