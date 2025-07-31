@@ -10,7 +10,7 @@ export default auth((req) => {
   // Закрытые пути
   // const closedPaths: string[] = [];
 
-  const publicPath: string[] = ["/auth/login", "/auth/register"];
+  const publicPath: string[] = ["/auth/login", "/auth/register", "/speed-test"];
 
   const isPublic = publicPath.includes(nextUrl.pathname);
 

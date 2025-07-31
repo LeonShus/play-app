@@ -1,0 +1,1 @@
+export { SpeedTest} from './ui/SpeedTest'

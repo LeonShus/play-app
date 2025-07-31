@@ -18,6 +18,12 @@ const eslintConfig = [
       "@typescript-eslint/no-unused-vars": "off", // отключаем правило
     },
   },
+  {
+    files: ['src/**'],
+    rules: {
+      'react-hooks/exhaustive-deps': 'off',
+    }
+  }
 
 ];
 

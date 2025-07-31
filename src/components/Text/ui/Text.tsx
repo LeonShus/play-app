@@ -7,14 +7,16 @@ export const Text = ({
   size = 16,
   weight = 300,
   sx,
+  className = "",
 }: {
   text: string | ReactNode;
   size?: number;
   weight?: number;
   sx?: SxProps<Theme>;
+  className?: string;
 }) => {
   return (
-    <StyledText sx={sx} size={size} weight={weight}>
+    <StyledText className={className} sx={sx} size={size} weight={weight}>
       {text}
     </StyledText>
   );
