@@ -20,6 +20,8 @@ export const SpeedTest = () => {
     2
   );
 
+  console.log("downloadSpeed", downloadSpeed);
+
   const testDownloadSpeed = async ({ signal }: { signal: AbortSignal }) => {
     setIsTesting(true);
     setDownloadSpeed(0);
@@ -59,7 +61,7 @@ export const SpeedTest = () => {
 
         // Расчет текущей скорости (каждые 500ms)
         const now = performance.now();
-        if (now - lastMeasuredTime >= 500) {
+        if (now - lastMeasuredTime >= 400) {
           const chunkTime = (now - lastMeasuredTime) / 1000; // в секундах
           const chunkLoaded = (loadedRef.current - lastMeasuredLoaded) * 8; // в битах
           const currentSpeed = chunkLoaded / biteToMb(chunkTime); // Mbps
@@ -69,14 +71,14 @@ export const SpeedTest = () => {
           lastMeasuredTime = now;
           lastMeasuredLoaded = loadedRef.current;
         }
-
-        // Финальный расчет средней скорости
-        // Отрабатывает когда скорость большая
-        const totalTime = (performance.now() - startTimeRef.current) / 1000;
-
-        const averageSpeed = (contentLength * 8) / biteToMb(totalTime);
-        setDownloadSpeed(parseFloat(averageSpeed.toFixed(2)));
       }
+
+      // // Финальный расчет средней скорости
+      // // Отрабатывает когда скорость большая
+      const totalTime = (performance.now() - startTimeRef.current) / 1000;
+
+      const averageSpeed = (contentLength * 8) / biteToMb(totalTime);
+      setDownloadSpeed(parseFloat(averageSpeed.toFixed(2)));
     } catch {
       //   console.error("Speed test failed:", error);
     } finally {
