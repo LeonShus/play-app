@@ -20,7 +20,6 @@ export const SpeedTest = () => {
     2
   );
 
-  console.log("downloadSpeed", downloadSpeed);
 
   const testDownloadSpeed = async ({ signal }: { signal: AbortSignal }) => {
     setIsTesting(true);
