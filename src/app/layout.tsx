@@ -1,12 +1,14 @@
 // import type { Metadata } from "next";
 // import { Geist, Geist_Mono } from "next/font/google";
 
-import { Providers } from "@/components/Providers";
+import { Providers } from "@/components/layout/Providers";
 import "./globals.css";
 import "@fontsource/roboto/300.css";
 import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
+import { auth } from "@/auth";
+import { IAuthSessionUser } from "@/lib/types/types";
 
 // const geistSans = Geist({
 //   variable: "--font-geist-sans",
@@ -28,10 +30,13 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const session = await auth();
   return (
     <html lang="en">
       <body>
-        <Providers>{children}</Providers>
+        <Providers authUser={session?.user as IAuthSessionUser}>
+          {children}
+        </Providers>
       </body>
     </html>
   );

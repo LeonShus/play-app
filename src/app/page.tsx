@@ -1,10 +1,6 @@
-import { getUsers } from "@/lib/api/users/usersApi";
 import { Box } from "@mui/material";
-import { User } from "@/components/User";
 
 export default async function Home() {
-  const users = await getUsers();
-
   return (
     <div>
       <Box
@@ -16,9 +12,7 @@ export default async function Home() {
           justifyContent: "center",
         }}
       >
-        {users?.map((e) => {
-          return <User key={e.id} id={e.id} name={e.name || e.email} />;
-        })}
+        <div>MAIN PAGE</div>
       </Box>
     </div>
   );

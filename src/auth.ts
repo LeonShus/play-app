@@ -65,20 +65,22 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     async redirect({ baseUrl }) {
       return baseUrl;
     },
-    // async jwt({ token, user }) {
-    //   console.log("jwt @@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-    //   if (user) {
-    //     token.id = user.id;
-    //   }
-    //   return token;
-    // },
-    // async session({ session, token }) {
-    //   console.log("session @@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-    //   if (session.user) {
-    //     session.user.id = token.id as string;
-    //   }
-    //   return session;
-    // },
+    async jwt({ user, token }) {
+      // console.log("jwt @@@@@@@@@@@@@@@@@@@@@@@@@@@@@", user);
+      if (user) {
+        token.id = user.id;
+      }
+      return token;
+    },
+    async session({ session, token }) {
+      // console.log("session @@@@@@@@@@@@@@@@@@@@@@@@@@@@@", session);
+      // console.log("token @@@@@@@@@@@@@@@@@@@@@@@@@@@@@", token);
+
+      if (session.user) {
+        session.user.id = token.id as string;
+      }
+      return session;
+    },
   },
   //   pages: {
   //     signIn: "/login",

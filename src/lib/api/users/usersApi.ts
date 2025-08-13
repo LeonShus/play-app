@@ -50,7 +50,7 @@ export async function createUser(data: typeof UsersTable.$inferInsert) {
   return newUser;
 }
 
-export async function removeUser({ userId }: { userId: number }) {
+export async function removeUser({ userId }: { userId: string }) {
   const data = await db
     .delete(UsersTable)
     .where(eq(UsersTable.id, userId))
