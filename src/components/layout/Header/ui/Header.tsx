@@ -20,8 +20,8 @@ export const Header = ({
       display={"flex"}
       alignItems={"center"}
       justifyContent={"space-between"}
-      padding={'10px 20px'}
-      border={'1px solid green'}
+      padding={"10px 20px"}
+      border={"1px solid green"}
     >
       <Box display={"flex"} alignItems={"center"}>
         <Switch
@@ -48,8 +48,7 @@ export const Header = ({
           />
         </Link>
       </Box>
-
-      <Text text={authUser.name || authUser.email} />
+      {authUser && <Text text={authUser.name || authUser.email} />}
     </Box>
   );
 };
