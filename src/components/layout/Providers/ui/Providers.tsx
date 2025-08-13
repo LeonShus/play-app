@@ -3,7 +3,7 @@
 import { Header } from "@/components/layout/Header";
 import { IAuthSessionUser, TTheme } from "@/lib/types/types";
 
-import { Box, CircularProgress, createTheme, ThemeProvider } from "@mui/material";
+import { Box, createTheme, ThemeProvider } from "@mui/material";
 import { ReactNode, useMemo, useState } from "react";
 
 export const Providers = ({
