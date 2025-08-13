@@ -5,50 +5,8 @@
     {
       "idx": 0,
       "version": "7",
-      "when": 1754403644621,
-      "tag": "0000_purple_proteus",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "7",
-      "when": 1754403646244,
-      "tag": "0001_organic_hardball",
-      "breakpoints": true
-    },
-    {
-      "idx": 2,
-      "version": "7",
-      "when": 1754403679647,
-      "tag": "0002_shiny_storm",
-      "breakpoints": true
-    },
-    {
-      "idx": 3,
-      "version": "7",
-      "when": 1754403726503,
-      "tag": "0003_tidy_iron_fist",
-      "breakpoints": true
-    },
-    {
-      "idx": 4,
-      "version": "7",
-      "when": 1754410162424,
-      "tag": "0004_woozy_mad_thinker",
-      "breakpoints": true
-    },
-    {
-      "idx": 5,
-      "version": "7",
-      "when": 1754647572538,
-      "tag": "0005_fantastic_gressill",
-      "breakpoints": true
-    },
-    {
-      "idx": 6,
-      "version": "7",
-      "when": 1754647992788,
-      "tag": "0006_lush_steve_rogers",
+      "when": 1755095958398,
+      "tag": "0000_pink_adam_destine",
       "breakpoints": true
     }
   ]
