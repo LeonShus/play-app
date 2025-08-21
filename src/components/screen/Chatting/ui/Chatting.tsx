@@ -1,21 +1,38 @@
-import { auth } from "@/auth";
+"use client";
+
+import { Chat } from "@/components/widgets/Chat";
 import { ChatItem } from "@/components/widgets/ChatItem";
-import { IChat } from "@/lib/types/types";
+import { IAuthSessionUser, IChat } from "@/lib/types/types";
 import { Box } from "@mui/material";
+import { useState } from "react";
 
-export const Chatting = async ({ chats }: { chats: IChat[] }) => {
-  const session = await auth();
+export const Chatting = ({
+  authUser,
+  chats,
+}: {
+  chats: IChat[];
+  authUser: IAuthSessionUser;
+}) => {
+  const [currentChat, setCurrentChat] = useState<IChat | null>(null);
 
-  if (!session?.user) {
-    return <></>;
-  }
 
   return (
-    <Box>
-      Chatting
-      {chats.map((chat) => {
-        return <ChatItem key={chat.id} authUser={session.user} chat={chat} />;
-      })}
+    <Box display={"flex"}>
+      <Box>
+        Chatting
+        {chats.map((chat) => {
+          return (
+            <ChatItem
+              key={chat.id}
+              authUser={authUser}
+              chat={chat}
+              setCurrentChat={setCurrentChat}
+            />
+          );
+        })}
+      </Box>
+
+      {currentChat && <Chat authUser={authUser} chat={currentChat} />}
     </Box>
   );
 };
