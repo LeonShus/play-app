@@ -5,6 +5,8 @@ import { sendMessage } from "@/lib/api/messages/messagesApi";
 import { IAuthSessionUser, IChat, IMessageFormState } from "@/lib/types/types";
 import { Box, Button, TextField } from "@mui/material";
 import { useActionState } from "react";
+import { Message } from "../../Message";
+import { StyledChatBox } from "./styles";
 
 export const Chat = ({
   chat,
@@ -46,10 +48,13 @@ export const Chat = ({
     >
       {chat.id}
 
-      {Boolean(chat.messages.length) &&
-        chat.messages.map((message) => {
-          return <Text key={message.id} text={message.text} />;
-        })}
+      {Boolean(chat.messages.length) && (
+        <StyledChatBox>
+          {chat.messages.map((message) => {
+            return <Message key={message.id} message={message} />;
+          })}
+        </StyledChatBox>
+      )}
 
       <Box>
         <form action={formAction}>
