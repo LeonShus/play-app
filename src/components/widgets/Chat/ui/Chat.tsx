@@ -2,9 +2,14 @@
 
 import { Text } from "@/components/shared/Text";
 import { sendMessage } from "@/lib/api/messages/messagesApi";
-import { IAuthSessionUser, IChat, IMessageFormState } from "@/lib/types/types";
+import {
+  IAuthSessionUser,
+  IChat,
+  IMessageFormState,
+  IUser,
+} from "@/lib/types/types";
 import { Box, Button, TextField } from "@mui/material";
-import { useActionState } from "react";
+import { useActionState, useMemo } from "react";
 import { Message } from "../../Message";
 import { StyledChatBox } from "./styles";
 
@@ -35,7 +40,17 @@ export const Chat = ({
     }
   );
 
-  console.log("state", state);
+  const members = useMemo(() => {
+    return chat.members.reduce((obj, member) => {
+      if (!Boolean(obj[member.userId]) && member.user) {
+        obj[member.userId] = member.user;
+      }
+
+      return obj;
+    }, {} as { [key: string]: IUser });
+  }, [chat.members]);
+
+  console.log("members", members);
 
   console.log("chat", chat);
 
@@ -51,7 +66,7 @@ export const Chat = ({
       {Boolean(chat.messages.length) && (
         <StyledChatBox>
           {chat.messages.map((message) => {
-            return <Message key={message.id} message={message} />;
+            return <Message key={message.id} authUser={authUser} message={message} author={members[message.userId]}/>;
           })}
         </StyledChatBox>
       )}

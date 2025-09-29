@@ -212,6 +212,7 @@ async function getChats({ authUserId }: { authUserId: string }) {
             chatId: MessagesTable.chatId,
             id: MessagesTable.id,
             text: MessagesTable.text,
+            updatedAt: MessagesTable.updatedAt,
           })
           .from(MessagesTable)
           .where(eq(MessagesTable.chatId, chat.id)),
